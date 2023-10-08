@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "shallowswimming",
+  "version": "${version}",
+  "name": "shallowswimming",
+  "description": "",
+  "authors": [
+    "AmyMialee"
+  ],
+  "contact": {
+    "repo": "https://github.com/AmyMi/shallowswimming"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/shallowswimming/icon.png",
+  "environment": "*",
+  "entrypoints": {},
+  "mixins": [
+    "shallowswimming.mixins.json"
+  ],
+  "depends": {}
+}
