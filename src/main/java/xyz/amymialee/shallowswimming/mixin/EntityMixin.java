@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(Entity.class)
 public class EntityMixin {
     @Shadow private BlockPos blockPos;
-    @Shadow public World world;
+    @Shadow private World world;
 
     @WrapOperation(method = "updateSwimming", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;isSubmergedInWater()Z"))
     private boolean shallowSwimming$notSubmerged(@NotNull Entity instance, @NotNull Operation<Boolean> original) {
