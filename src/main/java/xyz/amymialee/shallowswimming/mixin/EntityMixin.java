@@ -20,13 +20,11 @@ public class EntityMixin {
 
     @WrapOperation(method = "updateSwimming", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;isSubmergedInWater()Z"))
     private boolean shallowSwimming$notSubmerged(@NotNull Entity instance, Operation<Boolean> original) {
-        System.out.println("isSubmergedInWater: " + original.call(instance));
         return instance.isTouchingWater();
     }
 
     @WrapOperation(method = "updateSwimming", at = @At(value = "INVOKE", target = "Lnet/minecraft/fluid/FluidState;isIn(Lnet/minecraft/tag/TagKey;)Z"))
     private boolean shallowSwimming$blockPosition(FluidState instance, TagKey<Fluid> tag, @NotNull Operation<Boolean> original) {
-        System.out.println("isIn: " + original.call(instance, tag));
         return original.call(instance, tag) || original.call(this.world.getFluidState(this.blockPos.down()), tag);
     }
 }
