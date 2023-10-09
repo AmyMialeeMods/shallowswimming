@@ -3,19 +3,20 @@
   "id": "shallowswimming",
   "version": "${version}",
   "name": "shallowswimming",
-  "description": "",
+  "description": "A fix for MC-133414",
   "authors": [
     "AmyMialee"
   ],
   "contact": {
-    "repo": "https://github.com/AmyMi/shallowswimming"
+    "repo": "https://github.com/AmyMialeeMods/shallowswimming",
+    "sources": "https://github.com/AmyMialeeMods/shallowswimming",
+    "issues": "https://github.com/AmyMialeeMods/shallowswimming/issues",
+    "discord": "https://discord.gg/P4dUsxv6An"
   },
   "license": "All-Rights-Reserved",
   "icon": "assets/shallowswimming/icon.png",
   "environment": "*",
-  "entrypoints": {},
   "mixins": [
     "shallowswimming.mixins.json"
-  ],
-  "depends": {}
+  ]
 }

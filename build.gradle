@@ -1,6 +1,12 @@
 plugins {
     id 'fabric-loom' version '1.4-SNAPSHOT'
+    id 'com.matthewprenger.cursegradle' version '1.4.0'
+    id "com.modrinth.minotaur" version "2.+"
     id 'maven-publish'
+}
+
+base {
+    archivesName = project.archives_base_name + "-" + project.minecraft_version
 }
 
 version = project.mod_version
@@ -15,6 +21,50 @@ dependencies {
     mappings ("net.fabricmc:yarn:${project.yarn_mappings}:v2")
     modImplementation ("net.fabricmc:fabric-loader:${project.loader_version}")
     include  (implementation (annotationProcessor ("io.github.llamalad7:mixinextras-fabric:${project.mixin_extras_version}")))
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            name = "willBlRepositoryReleases"
+            url = "https://maven.willbl.dev/releases"
+            credentials(PasswordCredentials)
+            authentication {
+                basic(BasicAuthentication)
+            }
+        }
+    }
+}
+
+curseforge {
+    apiKey = project.hasProperty('curseforge_api_key') ? project.property('curseforge_api_key') : ''
+    project {
+        id = project.curseforge_project_id
+        changelogType = 'markdown'
+        addGameVersion project.minecraft_version
+        addGameVersion "Fabric"
+        addGameVersion "Quilt"
+        mainArtifact(remapJar) {
+            displayName = "v${project.version.toString().split("\\+")[0]} for Fabric/Quilt MC $project.minecraft_version"
+            releaseType = "release"
+        }
+    }
+}
+
+modrinth {
+    token = project.hasProperty("modrinth_api_key") ? project.property("modrinth_api_key") : ""
+    projectId = project.modrinth_project_id
+    versionNumber = project.version
+    versionName = "v${project.version.toString().split("\\+")[0]} for Fabric/Quilt MC $project.minecraft_version"
+    versionType = "release"
+    uploadFile = remapJar
+    gameVersions = [project.minecraft_version]
+    loaders = ["fabric", "quilt"]
 }
 
 processResources {
@@ -37,7 +87,7 @@ java {
 }
 
 jar {
-    from("LICENSE.md.md") {
+    from("LICENSE.md") {
         rename { "${it}_${base.archivesName.get()}"}
     }
 }
